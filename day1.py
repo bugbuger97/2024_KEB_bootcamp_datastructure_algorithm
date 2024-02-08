@@ -1,19 +1,32 @@
-import random
+def print_poly(f_x) -> str:
+    term = len(f_x) - 1
+    poly_expression = "f(x) = "
+
+    for i in range(len(fx)):
+        coefficient = f_x[i]
+
+        if coefficient >= 0:
+            poly_expression = poly_expression + "+"
+        poly_expression = poly_expression + f'{coefficient}x^{term} '
+        term = term - 1
+
+    return poly_expression
+
+
+def calculation_poly(x_value, f_x) -> int:
+    return_value = 0
+    term = len(f_x) - 1
+
+    for i in range(len(fx)):
+        coefficient = f_x[i]
+        return_value += coefficient * pow(x_value, term)
+        term = term - 1
+
+    return return_value
+
+
+fx = [2, 3, 4, 0, -9]
+
 if __name__ == "__main__":
-    result = random.randint(1,100)
-    cnt = 0
-    opportunities = 7
-    while cnt < opportunities:
-        cnt += 1
-        response = int(input("Input number : "))
-        if result > response:
-            print("up")
-        elif result < response:
-            print("down")
-        else:
-            print("correct!!")
-            print(f"{cnt}번만에 정답 번호 : {result}인 것을 맞추었습니다.")
-            break
-    else:
-        print("failed!! You lose......")
-        print(f"The Answer is {result}")
+    print(print_poly(fx))
+    print(calculation_poly(int(input("x 값 : ")), fx))
