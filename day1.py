@@ -16,3 +16,4 @@ if __name__ == "__main__":
             break
     else:
         print("failed!! You lose......")
+        print(f"The Answer is {result}")
