@@ -9,7 +9,7 @@ def time_taken(func) -> float:
         start = time.time()
         result = func(*args,**kwargs)
         end = time.time()
-        print(f"time elaped : {end-start}")
+        print(f"time elapsed : {end-start}")
         return result
     return wrapper
 def factorial(number) -> int:
