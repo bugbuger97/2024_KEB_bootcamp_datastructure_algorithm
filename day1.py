@@ -1,10 +1,10 @@
 def factorial(number) -> int:
     """
-    factorial function
+    factorial function by recursion
     :param number: number
     :return: number!
     """
-    if number <= 0:
+    if number <= 1:
         return 1
     else:
         return number * factorial(number-1)
