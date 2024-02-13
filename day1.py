@@ -1,31 +1,46 @@
-def print_poly(f_x) -> str:
-    term = len(f_x) - 1
-    poly_expression = "f(x) = "
+# 삽입, 삭제할 때 : 링크드 리스트 유리
+# 검색할 때 : 배열, 벡터가 유리
 
-    for i in range(len(fx)):
-        coefficient = f_x[i]
-        if coefficient == 0:
-            term = term - 1
-            continue
-        elif coefficient >= 0 and i != 0:
-            poly_expression = poly_expression + "+"
-        poly_expression = poly_expression + f'{coefficient}x^{term} '
-        term = term - 1
-    return poly_expression
-def calculation_poly(x_value, f_x) -> int:
-    return_value = 0
-    term = len(f_x) - 1
+class Node() :
+	def __init__ (self) :
+		self.data = None
+		self.link = None
+def print_nodes(start) :
+	current = start
+	if current == None :
+		return
+	print(current.data, end = ' ')
+	while current.link != None:
+		current = current.link
+		print(current.data, end = ' ')
+	print()
+def make_simple_linked_list(number) :
+	global head, current, pre
+	print_nodes(head)
+	node = Node()
+	node.data = number
+	if head == None :
+		head = node
+		return
+	if head.data[1] < number[1] :
+		node.link = head
+		head = node
+		return
+	current = head
+	while current.link != None :
+		pre = current
+		current = current.link
+		if current.data[1] < number[1]:
+			pre.link = node
+			node.link = current
+			return
+	current.link = node
 
-    for i in range(len(fx)):
-        coefficient = f_x[i]
-        return_value += coefficient * pow(x_value, term)
-        term = term - 1
+head, current, pre = None, None, None
+dataArray = [["가", "1"], ["나", "2"], ["다", "3"], ["라", "4"], ["마", "5"]]
 
-    return return_value
-
-
-fx = [2, 3, 4, 0, -9]
-
-if __name__ == "__main__":
-    print(print_poly(fx))
-    print(calculation_poly(int(input("x 값 : ")), fx))
+print(globals())
+if __name__ == "__main__" :
+	for data in dataArray :
+		make_simple_linked_list(data)
+	print_nodes(head)
