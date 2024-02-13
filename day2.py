@@ -60,7 +60,7 @@ def minus_node(start):
     else:
         flag = 1
     current = start
-    while current.link is not start:
+    for i in range(len(dataArray)):
         if current.data%2 == flag:
             current.data *= -1
         print(current.data, end=' ')
