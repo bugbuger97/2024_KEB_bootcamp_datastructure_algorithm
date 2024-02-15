@@ -1,28 +1,29 @@
-'''
-Linear List
-데이터를 입략 순서대로 저장하는 데이터 구조
-'''
+# 3-2
+def print_Poly(fx):
+    term = len(fx)
+    poly_str = "f(x) = "
+    for i in range(len(fx)):
+        coef = fx[i]
+        term -= 1
+        if coef == 0:
+            continue
+        if coef > 0:
+            poly_str += "+"
+        poly_str += str(coef) + "x^" + str(term) + " "
+    return poly_str
+def calcPoly(x_Value, fx):
+    result_Value = 0
+    term = len(fx) - 1
+    for i in range(len(fx)):
+        coef = fx[i]
+        result_Value += coef * x_Value ** term
+        term -= 1
+    return result_Value
 
-# Linear_List = [0,1,2,3]
-#
-# for i in range(len(Linear_List)):
-#     print(id(Linear_List[i]))
-
-# 3-1
-def delete(pos):
-    global Linear_List
-    if pos < 0 or pos > len(Linear_List):
-        print("데이터를 삭제할 범위를 벗어남")
-        return
-    Len = len(Linear_List)
-    del(Linear_List[pos:])
-    return
-
-Linear_List = ['가', '나', '다', '라', '마','바','사']
-
+fx = [7, -4, 0, 5]
 if __name__ == "__main__":
-    print(Linear_List)
-    delete(1)
-    print(Linear_List)
-    delete(3)
-    print(Linear_List)
+    pStr = print_Poly(fx)
+    print(pStr)
+    xValue = int(input("x 값 = "))
+    pxValue = calcPoly(xValue, fx)
+    print(pxValue)
