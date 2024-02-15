@@ -1,15 +1,26 @@
-# 응용 01
+# 응용 02
+def print_Poly(fx):
+    poly_str = "f(x) = "
+    for i in range(len(fx)):
+        coef = fx[i]
+        if coef == 0:
+            continue
+        if coef > 0:
+            poly_str += "+"
+        poly_str += str(coef) + "x^" + str(term[i]) + " "
+    return poly_str
+def calc_Poly(x_Value, fx):
+    result_Value = 0
+    for i in range(len(fx)):
+        coef = fx[i]
+        result_Value += coef * x_Value ** term[i]
+    return result_Value
 
-def add_List():
-    global Linear_List
-    name = input("추가할 data : ")
-    number = int(input("data의 number : "))
-    Linear_List = [(name,number)] + Linear_List
-    return Linear_List
-
-Linear_List = [('가',200),('나',180),('다',160),('라',140),('마',120)]
+term = [300,20,0,0]
+fx = [7, -4, 0, 5]
 if __name__ == "__main__":
-    while True:
-        print(add_List())
-        if Linear_List[0][1] == 0:
-            break
+    Str = print_Poly(fx)
+    print(Str)
+    x_Value = int(input("x 값 = "))
+    fx_Value = calc_Poly(x_Value, fx)
+    print(fx_Value)
