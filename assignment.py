@@ -1,42 +1,47 @@
-# 4-2
+# Linked List 응용 문제 1
 class Node():
-	def __init__(self):
-		self.data = None
+	def __init__(self,data=None):
+		self.data = data
 		self.link = None
 def print_Nodes(start):
 	current = start
 	if current == None:
 		return
-	print(current.data, end = ' ')
+	print(current.data, end = " -> ")
 	while current.link != None:
 		current = current.link
-		print(current.data, end = ' ')
-	print()
-def make_Simple_Linked_List(String_Number):
+		print(current.data, end = " -> ")
+	print(current.link)
+def make_linked_list(name,email):
 	global head, current, pre
-	print_Nodes(head)
-	node = Node()
-	node.data = String_Number
+	node = Node([name,email])
 	if head == None:
 		head = node
-		return
-	if head.data[1] > String_Number[1]:
+		return print_Nodes(head)
+	if head.data[0] > node.data[0]:
 		node.link = head
 		head = node
-		return
-	current = head
-	while current.link != None:
-		pre = current
-		current = current.link
-		if current.data[1] > String_Number[1]:
-			pre.link = node
-			node.link = current
-			return
-	current.link = node
+		return print_Nodes(head)
+	if head.link is None and head.data[0] < node.data[0]:
+		head.link = node
+		return print_Nodes(head)
+	else:
+		current = head
+		while current.link is not None:
+			pre = current
+			current = current.link
+			if current.data[0] > node.data[0]:
+				pre.link = node
+				node.link = current
+				return print_Nodes(head)
+		current.link = node
+		return print_Nodes(head)
 
 head, current, pre = None, None, None
-data_array = [["가", 5], ["나", 4], ["다", 2], ["라", 3], ["마", 1]]
 if __name__ == "__main__":
-	for data in data_array:
-		make_Simple_Linked_List(data)
-	print_Nodes(head)
+	while True:
+		name = input("이름 : ")
+		if name == "0":
+			break
+		email = input("이메일 : ")
+		make_linked_list(name, email)
