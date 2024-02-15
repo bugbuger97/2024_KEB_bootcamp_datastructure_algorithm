@@ -1,54 +1,42 @@
-class Node() :
-	def __init__ (self) :
+# 4-2
+class Node():
+	def __init__(self):
 		self.data = None
 		self.link = None
-def print_Nodes(start) :
+def print_Nodes(start):
 	current = start
-	if current == None :
+	if current == None:
 		return
 	print(current.data, end = ' ')
 	while current.link != None:
 		current = current.link
 		print(current.data, end = ' ')
 	print()
-def delete_Node(deleteData):
-    global head, current, pre
-    if head.data == deleteData:
-        current = head
-        head = head.link
-        del(current)
-        print("첫 노드가 삭제됨")
-        return
-    current = head
-    while current.link != None :
-        pre = current
-        current = current.link
-        if current.data == deleteData :
-            pre.link = current.link
-            del(current)
-            print("중간 노드가 삭제됨")
-            return
-    else:
-        print("삭제된 노드가 없음")
+def make_Simple_Linked_List(String_Number):
+	global head, current, pre
+	print_Nodes(head)
+	node = Node()
+	node.data = String_Number
+	if head == None:
+		head = node
+		return
+	if head.data[1] > String_Number[1]:
+		node.link = head
+		head = node
+		return
+	current = head
+	while current.link != None:
+		pre = current
+		current = current.link
+		if current.data[1] > String_Number[1]:
+			pre.link = node
+			node.link = current
+			return
+	current.link = node
 
 head, current, pre = None, None, None
-dataArray = ["가", "나", "다", "라", "마"]
-
+data_array = [["가", 5], ["나", 4], ["다", 2], ["라", 3], ["마", 1]]
 if __name__ == "__main__":
-    node = Node()
-    node.data = dataArray[0]
-    head = node
-    for data in dataArray[1:]:
-        pre = node
-        node = Node()
-        node.data = data
-        pre.link = node
-    print_Nodes(head)
-    delete_Node("가")
-    print_Nodes(head)
-    delete_Node("다")
-    print_Nodes(head)
-    delete_Node("라")
-    print_Nodes(head)
-    delete_Node("라")
-    print_Nodes(head)
+	for data in data_array:
+		make_Simple_Linked_List(data)
+	print_Nodes(head)
