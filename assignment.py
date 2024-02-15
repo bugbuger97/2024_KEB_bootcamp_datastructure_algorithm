@@ -1,4 +1,5 @@
-# Linked List 응용 문제 1
+# Linked List 응용 문제 2
+import random
 class Node():
 	def __init__(self,data=None):
 		self.data = data
@@ -7,41 +8,30 @@ def print_Nodes(start):
 	current = start
 	if current == None:
 		return
-	print(current.data, end = " -> ")
+	print(current.data, end = " ")
 	while current.link != None:
 		current = current.link
-		print(current.data, end = " -> ")
-	print(current.link)
-def make_linked_list(name,email):
-	global head, current, pre
-	node = Node([name,email])
-	if head == None:
-		head = node
-		return print_Nodes(head)
-	if head.data[0] > node.data[0]:
-		node.link = head
-		head = node
-		return print_Nodes(head)
-	if head.link is None and head.data[0] < node.data[0]:
-		head.link = node
-		return print_Nodes(head)
-	else:
-		current = head
-		while current.link is not None:
-			pre = current
-			current = current.link
-			if current.data[0] > node.data[0]:
-				pre.link = node
-				node.link = current
-				return print_Nodes(head)
-		current.link = node
-		return print_Nodes(head)
+		print(current.data, end = " ")
+	print()
 
-head, current, pre = None, None, None
+def make_linked_list(num):
+	global head
+	node = Node(num)
+	if head is None:
+		head = node
+		return
+	if head.link == None:
+		head.link = node
+		return
+	current = head
+	while current.link is not None:
+		current = current.link
+		if current.link is None:
+			current.link = node
+			return
+
+head = None
 if __name__ == "__main__":
-	while True:
-		name = input("이름 : ")
-		if name == "0":
-			break
-		email = input("이메일 : ")
-		make_linked_list(name, email)
+	for i in range(6):
+		make_linked_list(random.randint(1,45))
+	print_Nodes(head)
