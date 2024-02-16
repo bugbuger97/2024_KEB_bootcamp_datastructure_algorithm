@@ -1,26 +1,54 @@
-# Stack 응용 1
+# Queue 응용 1
+def is_Queue_full():
+	global SIZE, queue, front, rear
+	if rear == SIZE-1:
+		return True
+	else:
+		return False
+def is_Queue_empty():
+	global SIZE, queue, front, rear
+	if front == rear:
+		return True
+	else:
+		return False
+def enQueue(data):
+	global SIZE, queue, front, rear
+	if is_Queue_full():
+		print("Queue is full")
+		return
+	rear+=1
+	queue[rear] = data
+def deQueue():
+	global SIZE, queue, front, rear
+	if is_Queue_empty():
+		print("Queue is empty")
+		return
+	front+=1
+	data = queue[front]
+	queue[front] = None
+	if queue[front+1] != None:
+		queue = queue[front+1:] + [None]
+	front -= 1
+	rear -= 1
+	return data
 
-class Stack:
-	def __init__(self):
-		self.stack = list()
-	def push(self, data):
-		self.stack.append(data)
-	def pop(self):
-		print(self.stack[-1],end="")
-		del(self.stack[-1])
-
-if __name__ == "__main__":
-	string = """
-	진달래꽃
-	나 보기가 역겨워
-	가실 때에는
-	말 없이 고이 보내드리오리다.
-	"""
-	print("----------- 원본 -----------")
-	print(string)
-	print("----------- 결과 -----------")
-	s = Stack()
-	for i in string:
-		s.push(i)
-	for i in range(len(s.stack)):
-		s.pop()
+SIZE = 5
+queue = [ None for _ in range(SIZE) ]
+front = rear = -1
+if __name__ == "__main__" :
+	enQueue("a")
+	enQueue("b")
+	enQueue("c")
+	enQueue("d")
+	enQueue("e")
+	print(queue)
+	deQueue()
+	print(queue)
+	deQueue()
+	print(queue)
+	deQueue()
+	print(queue)
+	deQueue()
+	print(queue)
+	deQueue()
+	print(queue)
