@@ -25,7 +25,7 @@ def bubble_sort(arr):
             if arr[j] > arr[j+1]:
                 arr[j], arr[j+1] = arr[j+1], arr[j]
     return arr
-# 퀵 정렬 : pivot을 하나 정해서 그룹을 2개로 나누어 정렬하는 방법(재귀를 사용함.) -> O(n^2)
+# 퀵 정렬 : pivot을 하나 정해서 그룹을 2개로 나누어 정렬하는 방법(재귀를 사용함.) -> average : O(n log n), worst : O(n^2)
 def quick_sort(arr):
     arr_size = len(arr)
     if arr_size <= 1:
