@@ -1,23 +1,3 @@
-'''
-binary tree
-
-binary tree traversal -> 재귀 사용
-
-전위 순회
-1. current 노드 데이터 처리
-2. left 자식 트리로 이동
-3. right 자식 트리로 이동
-
-중위 순회
-1. left 자식 트리로 이동
-2. current 노드 데이터 처리
-3. right 자식 트리로 이동
-
-후위 순회
-1. left 자식 트리로 이동
-2. right 자식 트리로 이동
-3. current 노드 데이터 처리
-'''
 class tree_node():
 	def __init__(self,data=None):
 		self.left = None
@@ -46,36 +26,75 @@ def postorder(node):
 		postorder(node.right)
 		print(node.data, end = " -> ")
 
+def make_tree(arr):
+	global root
+	node = tree_node(arr[0])
+	root = node
+	for data in arr[1:]:
+		node = tree_node(data)
+		current = root
+		while True:
+			if data < current.data:
+				if current.left == None:
+					current.left = node
+					break
+				current = current.left
+			else:
+				if current.right == None:
+					current.right = node
+					break
+				current = current.right
+def delete_tree_node(del_data):
+	global root
+	current = root
+	parent = None
+	while True:
+		if del_data == current.data:
+			if current.left == None and current.right == None:
+				if parent.left == current:
+					parent.left = None
+				else:
+					parent.right = current.left
+				del(current)
+			elif current.left != None and current.right == None:
+				if parent.left == current:
+					parent.left = None
+				else:
+					parent.right = current.left
+				del (current)
+			elif current.left == None and current.right != None:
+				if parent.left == current:
+					parent.left = None
+				else:
+					parent.right = current.left
+				del (current)
+			print(f'{del_data} is deleted')
+			break
+		elif del_data < current.data:
+			if current.left == None:
+				print(f"{del_data} don't exist in the tree")
+				break
+			parent = current
+			current = current.left
+		else:
+			if current.right == None:
+				print(f"{del_data} don't exist in the tree")
+				break
+			parent = current
+			current = current.right
+
+root = None
+arr = ['바', '라', '마', '아', '가', '타']
 if __name__ == "__main__":
-	node1 = tree_node('첫째')
-	node2 = tree_node('둘째')
-	node3 = tree_node('셋째')
-	node4 = tree_node('넷째')
-	node5 = tree_node('다섯째')
-	node6 = tree_node('여섯째')
-	node7 = tree_node('일곱째')
-	node1.left = node2
-	node1.right = node3
-	node2.left = node4
-	node2.right = node5
-	node3.left = node6
-	node3.right = node7
-	print(node1.data)
-	print(node1.left.data,node1.right.data)
-	print(node1.left.left.data,node1.left.right.data,node1.right.left.data,node1.right.right.data)
 	'''
-	                 첫째
-	        둘째			     셋째
-	    넷째	   다섯째    여섯째    일곱째
+	           바
+	    라			  마
+	가        	 아         타
 	'''
-	print(f'preorder : ', end = '')
-	preorder(node1)
-	print('끝')
-
-	print(f'inorder : ', end='')
-	inorder(node1)
-	print('끝')
-
-	print(f'postorder : ', end='')
-	postorder(node1)
-	print('끝')
+	make_tree(arr)
+	preorder(root)
+	print("끝")
+	print()
+	delete_tree_node('아')
+	preorder(root)
+	print("끝")
