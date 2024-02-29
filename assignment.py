@@ -18,11 +18,16 @@ def fibo_memoization(number: int) -> int:
     :return: integer number
     """
     global memo
-    if number >= len(memo):
-        memo.append(fibo_memoization(number-1)+fibo_memoization(number-2))
-    return memo[number]
+    if memo[number] is not None:
+        return memo[number]
+    if number < 2:
+        result = number
+    else:
+        result = fibo_memoization(number-1) + fibo_memoization(number-2)
+        memo[number] = result
+    return result
 
-memo = [0,1]
+memo = [None for _ in range(100)]
 if __name__ == "__main__":
     print(fibo_memoization(10))
     print(memo)
