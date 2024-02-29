@@ -1,3 +1,4 @@
+import os
 class tree_node():
 	def __init__(self,data=None):
 		self.left = None
@@ -43,29 +44,25 @@ def make_tree(arr):
 					break
 				current = current.right
 
-def Remove_duplicates(arr):
-	cnt = 0
-	arr_end = len(arr) - 1
-	temp = arr[0]
-	stack = [arr[0]]
+def duplicates():
+	global arr
+	stack = []
 	for i in arr:
-		cnt += 1
-		if i in stack:
-			continue
-		else:
+		if arr.count(i) > 1 and i not in stack:
 			stack.append(i)
 	return stack
 
+def list_files_in_directory(directory):
+	arr = []
+	for root, dirs, files in os.walk(directory):
+		for file in files:
+			file_path = os.path.join(root)
+			arr.append(file_path)
+	return arr
 
 root = None
-arr = ['레쓰비캔 커피', '레쓰비캔 커피', '레쓰비캔 커피', '도시락', '도시락', '삼각김밥','레쓰비캔 커피',
-	   '도시락', '코카콜라','삼다수','레쓰비캔 커피','레쓰비캔 커피','레쓰비캔 커피','츄파춥스','츄파춥스',
-	   '레쓰비캔 커피','코카콜라','츄파춥스','삼각김밥','코카콜라']
+target_directory = f"C:/Users/user/Desktop"
+arr = list_files_in_directory(target_directory)
 if __name__ == "__main__":
-	print(f'오늘 판매된 물건(중복O) --> {arr}\n')
-	result=Remove_duplicates(arr)
-	make_tree(result)
-	print('이진 탐색 트리 구성 완료!\n')
-	print('오늘 판매된 종류(중복 X) --> ',end='')
-	preorder(root)
-	print("끝")
+	print(f'{target_directory} 및 그 하위 디렉토리의 중복된 파일 목록 --> ')
+	print(duplicates())
