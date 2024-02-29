@@ -1,68 +1,20 @@
-import os
-class tree_node():
-	def __init__(self,data=None):
-		self.left = None
-		self.data = data
-		self.right = None
-def preorder(node):
-	if node == None:
-		return
-	else:
-		print(node.data, end = ' -> ')
-		preorder(node.left)
-		preorder(node.right)
-def inorder(node):
-	if node == None:
-		return
-	else:
-		inorder(node.left)
-		print(node.data, end=' -> ')
-		inorder(node.right)
-def postorder(node):
-	if node == None:
-		return
-	else:
-		postorder(node.left)
-		postorder(node.right)
-		print(node.data, end = " -> ")
-def make_tree(arr):
-	global root
-	node = tree_node(arr[0])
-	root = node
-	for data in arr[1:]:
-		node = tree_node(data)
-		current = root
-		while True:
-			if data < current.data:
-				if current.left == None:
-					current.left = node
-					break
-				current = current.left
-			else:
-				if current.right == None:
-					current.right = node
-					break
-				current = current.right
+'''
+recursion
+자기 자신을 호출하는 것
 
-def duplicates():
-	global arr
-	stack = []
-	for i in arr:
-		if arr.count(i) > 1 and i not in stack:
-			stack.append(i)
-	return stack
+함수 호출 -> 1.Function() -> 함수 호출 -> 2.Function() -> 내용물 반환 -> return(2.Function() 끝) -> 1.Function() -> 함수 close
+'''
 
-def list_files_in_directory(directory):
-	arr = []
-	for root, dirs, files in os.walk(directory):
-		for file in files:
-			file_path = os.path.join(root)
-			arr.append(file_path)
-	return arr
+def Function():
+    global cnt
+    print("함수 호출")
+    cnt -= 1
+    if cnt == 0:
+        print('내용물 반환')
+        return
+    Function()
+    print('함수 close')
 
-root = None
-target_directory = f"C:/Users/user/Desktop"
-arr = list_files_in_directory(target_directory)
+cnt = 2
 if __name__ == "__main__":
-	print(f'{target_directory} 및 그 하위 디렉토리의 중복된 파일 목록 --> ')
-	print(duplicates())
+    Function()
