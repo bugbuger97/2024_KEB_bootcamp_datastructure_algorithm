@@ -1,20 +1,15 @@
-'''
-recursion
-자기 자신을 호출하는 것
+# self study 10-1
 
-함수 호출 -> 1.Function() -> 함수 호출 -> 2.Function() -> 내용물 반환 -> return(2.Function() 끝) -> 1.Function() -> 함수 close
-'''
+def recursion_plus(a,b):
+    if a > b:
+        a,b = b,a
+        return recursion_plus(a,b)
+    elif a == b:
+        return b
+    else:
+        return recursion_plus(a+1,b) + a
 
-def Function():
-    global cnt
-    print("함수 호출")
-    cnt -= 1
-    if cnt == 0:
-        print('내용물 반환')
-        return
-    Function()
-    print('함수 close')
-
-cnt = 2
 if __name__ == "__main__":
-    Function()
+    num1 = int(input('숫자1 --> '))
+    num2 = int(input('숫자2 --> '))
+    print(recursion_plus(num1,num2))
