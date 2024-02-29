@@ -3,7 +3,6 @@ class tree_node():
 		self.left = None
 		self.data = data
 		self.right = None
-
 def preorder(node):
 	if node == None:
 		return
@@ -25,7 +24,6 @@ def postorder(node):
 		postorder(node.left)
 		postorder(node.right)
 		print(node.data, end = " -> ")
-
 def make_tree(arr):
 	global root
 	node = tree_node(arr[0])
@@ -44,57 +42,30 @@ def make_tree(arr):
 					current.right = node
 					break
 				current = current.right
-def delete_tree_node(del_data):
-	global root
-	current = root
-	parent = None
-	while True:
-		if del_data == current.data:
-			if current.left == None and current.right == None:
-				if parent.left == current:
-					parent.left = None
-				else:
-					parent.right = current.left
-				del(current)
-			elif current.left != None and current.right == None:
-				if parent.left == current:
-					parent.left = None
-				else:
-					parent.right = current.left
-				del (current)
-			elif current.left == None and current.right != None:
-				if parent.left == current:
-					parent.left = None
-				else:
-					parent.right = current.left
-				del (current)
-			print(f'{del_data} is deleted')
-			break
-		elif del_data < current.data:
-			if current.left == None:
-				print(f"{del_data} don't exist in the tree")
-				break
-			parent = current
-			current = current.left
+
+def Remove_duplicates(arr):
+	cnt = 0
+	arr_end = len(arr) - 1
+	temp = arr[0]
+	stack = [arr[0]]
+	for i in arr:
+		cnt += 1
+		if i in stack:
+			continue
 		else:
-			if current.right == None:
-				print(f"{del_data} don't exist in the tree")
-				break
-			parent = current
-			current = current.right
+			stack.append(i)
+	return stack
+
 
 root = None
-arr = ['바', '라', '마', '아', '가', '타']
+arr = ['레쓰비캔 커피', '레쓰비캔 커피', '레쓰비캔 커피', '도시락', '도시락', '삼각김밥','레쓰비캔 커피',
+	   '도시락', '코카콜라','삼다수','레쓰비캔 커피','레쓰비캔 커피','레쓰비캔 커피','츄파춥스','츄파춥스',
+	   '레쓰비캔 커피','코카콜라','츄파춥스','삼각김밥','코카콜라']
 if __name__ == "__main__":
-	'''
-	           바
-	    라			  마
-	가        	 아         타
-	'''
-	make_tree(arr)
-	preorder(root)
-	print("끝")
-	print()
-	delete_tree_node('아')
+	print(f'오늘 판매된 물건(중복O) --> {arr}\n')
+	result=Remove_duplicates(arr)
+	make_tree(result)
+	print('이진 탐색 트리 구성 완료!\n')
+	print('오늘 판매된 종류(중복 X) --> ',end='')
 	preorder(root)
 	print("끝")
