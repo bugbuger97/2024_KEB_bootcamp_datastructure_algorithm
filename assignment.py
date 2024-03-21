@@ -1,4 +1,4 @@
-# 연습 문제 2(Command-line argument)
+# 연습 문제 3: 좌측 환형 시프트
 import array
 class Array_List:
     def __init__(self,n):
@@ -23,7 +23,8 @@ class Array_List:
         :return: array
         '''
         if self.full():
-            return f'배열이 모두 찼기 때문에 더 이상 삽입이 불가능합니다.'
+            print(f'배열이 모두 찼기 때문에 더 이상 삽입이 불가능합니다.')
+            return
         if self.array[idx] == 0:
             self.array[idx] = item
         else:
@@ -43,7 +44,7 @@ class Array_List:
         if idx == self.size-1:
             self.array[idx] = 0
             return self.array
-        for i in range(idx,self.size):
+        for i in range(idx,self.size-1):
             self.array[i] = self.array[i+1]
         self.size -= 1
         return self.array
@@ -54,22 +55,18 @@ class Array_List:
                 return idx
             idx+=1
         return -1
+    def left_shift(self,d):
+        arr = self.array[:d]
+        for i in range(d):
+            self.remove(0)
+        for i in arr:
+            self.add(self.size,i)
+        return self.array
 
 if __name__ == '__main__': # 메인문
-    arr_list = Array_List(6)
-    while True:
-        print('Command: 1. add, 2.remove, 3.print, 4.exit')
-        Input_number = int(input())
-        if Input_number == 1:
-            print('Enter item:')
-            arr_list.add(arr_list.size,int(input()))
-        elif Input_number == 2:
-            print('Enter index:')
-            arr_list.remove(int(input()))
-        elif Input_number == 3:
-            arr_list.print()
-        elif Input_number == 4:
-            print('Program finishes')
-            break
-        else:
-            print('Reinput number!!')
+    arr_list = Array_List(8)
+    for i in range(8):
+        arr_list.add(i,i+1)
+    arr_list.print()
+    arr_list.left_shift(4)
+    arr_list.print()
