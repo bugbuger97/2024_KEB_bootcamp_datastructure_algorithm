@@ -1,4 +1,4 @@
-# 연습 문제1: 원소 삭제, 삽입
+# 연습 문제 2(Command-line argument)
 import array
 class Array_List:
     def __init__(self,n):
@@ -55,17 +55,21 @@ class Array_List:
             idx+=1
         return -1
 
-if __name__ == '__main__':
+if __name__ == '__main__': # 메인문
     arr_list = Array_List(6)
-    arr_list.add(0,5)
-    arr_list.add(0, 2)
-    arr_list.add(0, 8)
-    arr_list.add(1, 4)
-    arr_list.print()
-    arr_list.remove(2)
-    arr_list.remove(0)
-    arr_list.print()
-    arr_list.add(0, 3)
-    arr_list.add(1, 1)
-    arr_list.print()
-    print(f'4의 index는 {arr_list.find(4)}')
+    while True:
+        print('Command: 1. add, 2.remove, 3.print, 4.exit')
+        Input_number = int(input())
+        if Input_number == 1:
+            print('Enter item:')
+            arr_list.add(arr_list.size,int(input()))
+        elif Input_number == 2:
+            print('Enter index:')
+            arr_list.remove(int(input()))
+        elif Input_number == 3:
+            arr_list.print()
+        elif Input_number == 4:
+            print('Program finishes')
+            break
+        else:
+            print('Reinput number!!')
