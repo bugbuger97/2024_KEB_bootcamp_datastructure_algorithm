@@ -50,6 +50,7 @@ class LinkedList:
             current.link = node
         self.size+=1
     def remove(self,item):
+        self.size -= 1
         current = self.head
         if item == self.head.item:
             current = current.link
@@ -70,31 +71,38 @@ class LinkedList:
                     return
                 current = current.link
             print('해당 노드의 값이 없습니다.')
+    def reverse(self):
+        current = self.head
+        reverse_list = []
+        while current.item != self.tail.item:
+            reverse_list.append(current.item)
+            current = current.link
+        reverse_list.append(current.item)
+        reverse_list = reverse_list[::-1]
+        self.head = None
+        self.tail = None
+        for i in reverse_list:
+            node = Node(i)
+            if self.head == None:
+                self.head = node
+                self.tail = self.head
+            elif self.head == self.tail:
+                self.tail.link = node
+                self.tail = self.tail.link
+                self.head.link = self.tail
+            else:
+                self.tail.link = node
+                self.tail = self.tail.link
 
 if __name__ == "__main__":
     ll = LinkedList()
     ll.append(1)
+    ll.append(2)
     ll.append(3)
-    ll.append(7)
-    ll.append(12)
-    ll.append(15)
-    ll.append(16)
-    ll.append(17)
-    ll.append(18)
+    ll.append(4)
+    ll.append(5)
     ll.print()
-    ll.insert(0,2)
-    ll.insert(5,9)
+    ll.reverse()
     ll.print()
-    ll.remove(2)
-    ll.print()
-    ll.remove(3)
-    ll.print()
-    ll.remove(18)
-    ll.print()
-    ll.remove(9)
-    ll.print()
-    ll.remove(18)
-    ll.print()
-    ll.remove(9)
     print(f'head = {ll.head.item}')
     print(f'tail = {ll.tail.item}')
