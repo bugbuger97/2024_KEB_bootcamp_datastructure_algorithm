@@ -1,72 +1,100 @@
-# 연습 문제 3: 좌측 환형 시프트
-import array
-class Array_List:
-    def __init__(self,n):
-        self.capacity = n
-        self.array = array.array('h',[0]*self.capacity)
+class Node:
+    def __init__(self,item=None):
+        self.item = item
+        self.link = None
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
         self.size = 0
-    def full(self) -> bool:
-        '''
-        배열이 꽉 차면 True return, 아니면 False return
-        :return: bool flag
-        '''
-        if self.size == self.capacity:
-            return True
+    def append(self,item):
+        node = Node(item)
+        if self.head == None:
+            self.head = node
+            self.tail = self.head
+        elif self.head == self.tail:
+            self.tail.link = node
+            self.tail = self.tail.link
+            self.head.link = self.tail
         else:
-            return False
-    def add(self,idx,item) -> array:
-        '''
-        주어진 index에 데이터 삽입. 데이터 삽입.
-        해당 index에 데이터가 존재할 경우, 다음 element들을 오른쪽으로 한칸씩 이동 후 해당 위치에 삽입
-        :param idx: index
-        :param item: value
-        :return: array
-        '''
-        if self.full():
-            print(f'배열이 모두 찼기 때문에 더 이상 삽입이 불가능합니다.')
-            return
-        if self.array[idx] == 0:
-            self.array[idx] = item
-        else:
-            for i in range(self.size-1,idx-1,-1): # i = self.size-1 ~ idx
-                self.array[i+1] = self.array[i]
-            self.array[idx] = item
+            self.tail.link = node
+            self.tail = self.tail.link
         self.size += 1
-        return self.array
-    def print(self):
-        for i in range(self.size):
-            print(self.array[i],end=' ')
+    def print(self): # Q1
+        current = self.head
+        print(current.item, end=" ")
+        while current.link != None:
+            current = current.link
+            print(current.item,end=" ")
         print()
-    def sset(self,idx,item) -> array:
-        self.array[idx] = item
-        return self.array
-    def remove(self,idx) -> array:
-        if idx == self.size-1:
-            self.array[idx] = 0
-            return self.array
-        for i in range(idx,self.size-1):
-            self.array[i] = self.array[i+1]
-        self.size -= 1
-        return self.array
-    def find(self,item) -> int:
-        idx = 0
-        for i in self.array:
-            if i == item:
-                return idx
-            idx+=1
-        return -1
-    def left_shift(self,d):
-        arr = self.array[:d]
-        for i in range(d):
-            self.remove(0)
-        for i in arr:
-            self.add(self.size,i)
-        return self.array
+        return
+    def insert(self,idx,item): # Q1
+        node = Node(item)
+        if self.head == None:
+            self.head = node
+            self.tail = self.head
+        if idx == 0: # 첫번째 노드에 삽입
+            node.link = self.head
+            self.head = node
+        elif idx == self.size: # 마지막 노드에 삽입
+            current = self.head
+            while current.link != None:
+                current = current.link
+            current.link = node
+            self.tail = node
+        else:
+            current = self.head
+            for _ in range(idx-1):
+                current = current.link
+            node.link = current.link
+            current.link = node
+        self.size+=1
+    def remove(self,item):
+        current = self.head
+        if item == self.head.item:
+            current = current.link
+            self.head.link = None
+            self.head = current
+        else:
+            current = self.head
+            while current.item != self.tail.item:
+                if (current.link.item == self.tail.item and
+                        self.tail.item == item):
+                    self.tail = current
+                    current.link = None
+                    return
+                elif current.link.item == item:
+                    target = current.link
+                    current.link = current.link.link
+                    target.link = None
+                    return
+                current = current.link
+            print('해당 노드의 값이 없습니다.')
 
-if __name__ == '__main__': # 메인문
-    arr_list = Array_List(8)
-    for i in range(8):
-        arr_list.add(i,i+1)
-    arr_list.print()
-    arr_list.left_shift(4)
-    arr_list.print()
+if __name__ == "__main__":
+    ll = LinkedList()
+    ll.append(1)
+    ll.append(3)
+    ll.append(7)
+    ll.append(12)
+    ll.append(15)
+    ll.append(16)
+    ll.append(17)
+    ll.append(18)
+    ll.print()
+    ll.insert(0,2)
+    ll.insert(5,9)
+    ll.print()
+    ll.remove(2)
+    ll.print()
+    ll.remove(3)
+    ll.print()
+    ll.remove(18)
+    ll.print()
+    ll.remove(9)
+    ll.print()
+    ll.remove(18)
+    ll.print()
+    ll.remove(9)
+    print(f'head = {ll.head.item}')
+    print(f'tail = {ll.tail.item}')
