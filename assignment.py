@@ -59,20 +59,32 @@ class ArrayList:
             if self.array[_] == item:
                 return _
         return -1
-
+    def right_shift(self,d):
+        if d == 0:
+            return self.array
+        else:
+            self.array = self.array[self.size-d:] + self.array[:self.size-d]
+            return self.array
+    def left_shift(self,d):
+        if d == 0:
+            return self.array
+        else:
+            self.array = self.array[d:] + self.array[:d]
+            return self.array
+    def reverse(self,i,j):
+        tmp = self.array[i:j+1]
+        tmp = tmp[::-1]
+        self.array = self.array[:i] + tmp + self.array[j+1:]
+        return self.array
 # from arraylist import *
 if __name__ == '__main__':
     arr_list = ArrayList(6)
-    arr_list.add(0,5)
-    arr_list.add(1,2)
-    arr_list.add(2,8)
-    arr_list.add(3,4)
     arr_list.add(0,1)
-    arr_list.add(0,2)
+    arr_list.add(1,2)
+    arr_list.add(2,3)
+    arr_list.add(3,4)
+    arr_list.add(4,5)
+    arr_list.add(5,6)
     arr_list.print()
-
-    if arr_list.is_full():
-        print('배불러요')
-    arr_list.remove(0)
-    print(arr_list.find(0))
+    arr_list.reverse(1,4)
     arr_list.print()
