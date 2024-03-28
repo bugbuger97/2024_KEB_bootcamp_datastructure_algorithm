@@ -1,108 +1,78 @@
-class Node:
-    def __init__(self,item=None):
-        self.item = item
-        self.link = None
-class LinkedList:
-    def __init__(self):
-        self.head = None
-        self.tail = None
-        self.size = 0
-    def append(self,item):
-        node = Node(item)
-        if self.head == None:
-            self.head = node
-            self.tail = self.head
-        elif self.head == self.tail:
-            self.tail.link = node
-            self.tail = self.tail.link
-            self.head.link = self.tail
+import array
+'''
+Q1. 주어진 add함수를 수정하여 배열 중간에 원소가 삽입 되도록 해라.
+만약 array가 다 찼다면, return full
+아니라면, arr[idx]에 값이 있다면, 값이 없다면으로 나누자.
+arr[idx]에 값이 있다면 -> idx부터 size까지 한칸씩 이동 -> 목표 idx에 값 삽입 
+arr[idx]값이 없다면 -> 그냥 바로 삽입 
+'''
+class ArrayList:
+    def __init__(self,n):
+        self.capacity = n
+        self.array = array.array('h',[0]*self.capacity)
+        self.size=0
+    def is_full(self) -> bool:
+        if self.size == self.capacity:
+            return True
         else:
-            self.tail.link = node
-            self.tail = self.tail.link
-        self.size += 1
-    def print(self): # Q1
-        current = self.head
-        print(current.item, end=" ")
-        while current.link != None:
-            current = current.link
-            print(current.item,end=" ")
-        print()
-        return
-    def insert(self,idx,item): # Q1
-        node = Node(item)
-        if self.head == None:
-            self.head = node
-            self.tail = self.head
-        if idx == 0: # 첫번째 노드에 삽입
-            node.link = self.head
-            self.head = node
-        elif idx == self.size: # 마지막 노드에 삽입
-            current = self.head
-            while current.link != None:
-                current = current.link
-            current.link = node
-            self.tail = node
+            return False
+    def add(self,idx,item): # Q1
+        if self.is_full():
+            print('array가 다 찼기 때문에, 더 이상 삽입할 수 없습니다.')
         else:
-            current = self.head
-            for _ in range(idx-1):
-                current = current.link
-            node.link = current.link
-            current.link = node
-        self.size+=1
-    def remove(self,item):
-        self.size -= 1
-        current = self.head
-        if item == self.head.item:
-            current = current.link
-            self.head.link = None
-            self.head = current
-        else:
-            current = self.head
-            while current.item != self.tail.item:
-                if (current.link.item == self.tail.item and
-                        self.tail.item == item):
-                    self.tail = current
-                    current.link = None
-                    return
-                elif current.link.item == item:
-                    target = current.link
-                    current.link = current.link.link
-                    target.link = None
-                    return
-                current = current.link
-            print('해당 노드의 값이 없습니다.')
-    def reverse(self):
-        current = self.head
-        reverse_list = []
-        while current.item != self.tail.item:
-            reverse_list.append(current.item)
-            current = current.link
-        reverse_list.append(current.item)
-        reverse_list = reverse_list[::-1]
-        self.head = None
-        self.tail = None
-        for i in reverse_list:
-            node = Node(i)
-            if self.head == None:
-                self.head = node
-                self.tail = self.head
-            elif self.head == self.tail:
-                self.tail.link = node
-                self.tail = self.tail.link
-                self.head.link = self.tail
+            if self.array[idx] == 0:
+                self.array[idx] = item
             else:
-                self.tail.link = node
-                self.tail = self.tail.link
+                for _ in range(self.size-1,idx-1,-1):
+                    self.array[_+1] = self.array[_]
+                self.array[idx] = item
+        self.size += 1
+        return self.array
+    def print(self):
+        for i in range(self.size):
+            print(self.array[i],end=' ')
+        print()
+    def is_empty(self)->bool:
+        if self.size == 0:
+            return True
+        else:
+            return False
+    def remove(self,idx):
+        if self.is_empty():
+            print('다 비어서 제거할 값이 없어요')
+            return
+        else:
+            if self.array[idx] == 0:
+                print('이 인덱스에 제거할 값이 없어요')
+                return
+            else:
+                self.array[idx] = 0
+                for _ in range(idx,self.size-1):
+                    self.array[_] = self.array[_+1]
+                self.size -= 1
+            return self.array
+    def sset(self,idx,item):
+        self.array[idx] = item
+        return self.array
+    def find(self, item):
+        for _ in range(self.size):
+            if self.array[_] == item:
+                return _
+        return -1
 
-if __name__ == "__main__":
-    ll = LinkedList()
-    ll.append(1)
-    ll.append(2)
-    ll.append(3)
-    ll.append(4)
-    ll.append(5)
-    ll.print()
-    ll.reverse()
-    ll.print()
-    print(f'head = {ll.head.item}')
-    print(f'tail = {ll.tail.item}')
+# from arraylist import *
+if __name__ == '__main__':
+    arr_list = ArrayList(6)
+    arr_list.add(0,5)
+    arr_list.add(1,2)
+    arr_list.add(2,8)
+    arr_list.add(3,4)
+    arr_list.add(0,1)
+    arr_list.add(0,2)
+    arr_list.print()
+
+    if arr_list.is_full():
+        print('배불러요')
+    arr_list.remove(0)
+    print(arr_list.find(0))
+    arr_list.print()
